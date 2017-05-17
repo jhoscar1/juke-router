@@ -37,6 +37,8 @@ sidebar {
         color: white; }
     sidebar .menu-item.active, sidebar .menu-item:hover {
       border-left: 3px solid #00bc8c; }
+    sidebar .menu-item .active {
+      border-left: 3px solid #00bc8c; }
 
 footer {
   position: fixed;

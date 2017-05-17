@@ -9,11 +9,11 @@ const Sidebar = (props) => {
     <sidebar>
       <img src="juke.svg" className="logo" />
       <section>
-        <h4 className="menu-item active">
-          <Link to="/albums">ALBUMS</Link>
+        <h4 className="menu-item">
+          <Link activeClassName="active" to="/albums">ALBUMS</Link>
         </h4>
         <h4 className="menu-item">
-          <Link to="/artists">ARTISTS</Link>
+          <Link activeClassName="active" onClick={() => { document.getElementsByClassName("active")[0].parentElement.classList.add("active")}} to="/artists">ARTISTS</Link>
         </h4>
       </section>
     </sidebar>

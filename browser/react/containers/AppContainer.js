@@ -24,6 +24,8 @@ export default class AppContainer extends Component {
     this.selectAlbum = this.selectAlbum.bind(this);
     this.deselectAlbum = this.deselectAlbum.bind(this);
     this.selectArtist = this.selectArtist.bind(this);
+    this.selectArtistAlbums = this.selectArtistAlbums.bind(this);
+    this.selectArtistSongs = this.selectArtistSongs.bind(this);
   }
 
   componentDidMount () {
@@ -106,9 +108,31 @@ export default class AppContainer extends Component {
   selectArtist(artistId) {
     axios.get(`/api/artists/${artistId}`)
       .then(res => res.data)
-      .then(artist => this.setState({
-        selectedArtist: artist
-      }));
+      .then(artist => {
+        const selectedArtist = this.state.selectedArtist;
+        selectedArtist.artist = artist;
+        this.setState({selectedArtist});
+      });
+  }
+
+  selectArtistAlbums(artistId) {
+    axios.get(`/api/artists/${artistId}/albums`)
+      .then(res => res.data)
+      .then(albums => {
+        const selectedArtist = this.state.selectedArtist;
+        selectedArtist.albums = convertAlbums(albums);
+        this.setState({selectedArtist});
+      });
+  }
+
+  selectArtistSongs(artistId) {
+    axios.get(`/api/artists/${artistId}/songs`)
+      .then(res => res.data)
+      .then(songs => {
+        const selectedArtist = this.state.selectedArtist;
+        selectedArtist.songs = songs;
+        this.setState({selectedArtist});
+      });
   }
 
   deselectAlbum () {
@@ -116,6 +140,8 @@ export default class AppContainer extends Component {
   }
 
   render () {
+    console.log(this.props.children);
+    console.log(this.props.children.type);
     return (
       <div id="main" className="container-fluid">
         <div className="col-xs-2">
@@ -133,10 +159,11 @@ export default class AppContainer extends Component {
             albums: this.state.albums,
             selectAlbum: this.selectAlbum,
             // Artists Component
-            artist: this.state.selectedArtist,
+            selectedArtist: this.state.selectedArtist,
             artists: this.state.artists,
-            selectArtist: this.selectArtist
-
+            selectArtist: this.selectArtist,
+            selectArtistAlbums: this.selectArtistAlbums,
+            selectArtistSongs: this.selectArtistSongs
           }) : null
         }
         {/*
